@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Window.scss";
 
 export function Window() {
-  let videoList = ["izGwDsrQ1eQ", "dQw4w9WgXcQ", "y6120QOlsfU"];
+  let videoList = ["izGwDsrQ1eQ", "dQw4w9WgXcQ", "y6120QOlsfU", "L_jWHffIx5E", "k85mRPqvMbE", "ZcJjMnHoIBI"];
   let [randomVideo, setRandomVideo] = useState<string>();
 
   let [controlBarSize, setControlBarSize] = useState<number>(22);

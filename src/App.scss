@@ -1,0 +1,155 @@
+@import "page/home/Home.scss";
+
+:root {
+  --page-bg-color: rgb(10, 15, 15);
+  --page-text-color: rgb(100, 115, 115);
+  --max-width: 50vw;
+  --loader-size: 3vw;
+  --max-blur: 10px;
+}
+
+html,
+body {
+  background-color: var(--page-bg-color);
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: "monospace", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+#loader {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  font-size: calc(var(--loader-size) * 0.75);
+  color: var(--page-text-color);
+  flex-direction: column;
+  position: absolute;
+  display: flex;
+  z-index: 2;
+  animation-duration: 500ms;
+  animation-iteration-count: forwards;
+}
+
+#loader-image {
+  height: var(--loader-size);
+  image-rendering: pixelated;
+}
+
+@keyframes loaderAnimation {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(4turn);
+  }
+}
+
+@keyframes blurFadeOut {
+  from {
+    filter: blur(var(--max-blur));
+  }
+  to {
+    filter: blur(0);
+  }
+}
+
+@keyframes blurFadeIn {
+  from {
+    filter: blur(0);
+  }
+  to {
+    filter: blur(var(--max-blur));
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.blur {
+  animation-duration: 450ms;
+  filter: blur(var(--max-blur));
+  animation-fill-mode: forwards;
+  overflow-y: hidden;
+}
+
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--header-size));
+  align-items: center;
+  margin: auto;
+}
+
+.max-width {
+  max-width: var(--max-width);
+}
+
+.vertical-center {
+  margin: auto;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.blur-box {
+  background-color: rgba(10, 10, 10, 0.6);
+  border: calc(var(--loader-size) * 0.9) solid rgba(10, 10, 10, 0);
+  border-radius: 5%;
+}
+
+.flex {
+  display: flex;
+}
+
+.text {
+  font-weight: normal;
+  color: var(--page-text-color);
+  text-align: center;
+}
+
+.text.small {
+  font-size: calc(var(--header-size) * 0.3);
+  margin: 10px;
+}
+
+.text.medium {
+  font-size: calc(var(--header-size) * 0.4);
+  margin: 8px;
+}
+
+.text.large {
+  font-size: calc(var(--header-size) * 1.2);
+  margin: 0;
+}
+
+.text.top-0 {
+  margin-top: 0;
+}
+
+@font-face {
+  font-family: "monospace";
+  src: url("./resource/font/monospace.ttf");
+}
+
+@font-face {
+  font-family: "reklame";
+  src: url("/resource/font/reklame-script.otf");
+}

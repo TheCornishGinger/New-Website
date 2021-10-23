@@ -1,0 +1,9 @@
+.image {
+  margin-top: 50px !important;
+  margin-bottom: 60px !important;
+  width: 80%;
+  max-width: var(--max-width);
+  display: flex;
+  margin: auto;
+  image-rendering: pixelated;
+}

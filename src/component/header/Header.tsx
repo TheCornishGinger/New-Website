@@ -12,6 +12,7 @@ export function Header() {
   let [init, setInit] = useState<boolean>(false);
   let [menuState, setMenuState] = useState<boolean>(false);
   let [sideHeaderClass, setSideHeaderClass] = useState<string>("side-header");
+  let [headerSize, setHeaderSize] = useState<number>(80);
 
   // ANIMATION
   let [headerAnim, setHeaderAnim] = useState<string>();
@@ -29,25 +30,29 @@ export function Header() {
 
   // FUNCTIONS
   useEffect(() => {
-    document.addEventListener("mousemove", mouseMove);
-    document.addEventListener("mouseenter", mouseEnter);
-    document.addEventListener("mouseleave", mouseLeave);
-    function mouseMove() {
-      //get the mouse x if less then set amount openMenu else closeMenu
+    if (init) {
+      let mouseEvent = (e: MouseEvent) => {
+        let size = headerSize * 1.5;
+        if (!menuState && e.pageX < size) {
+          openMenu();
+        } else if (menuState && e.pageX > size) {
+          closeMenu();
+        }
+      };
+      document.addEventListener("mousemove", mouseEvent);
+      return () => {
+        document.removeEventListener("mousemove", mouseEvent);
+      };
     }
-    function mouseEnter() {}
-    function mouseLeave() {}
-    return () => {
-      document.removeEventListener("mouseenter", mouseEnter);
-      document.removeEventListener("mouseleave", mouseLeave);
-    };
-  }, []);
+  }, [init, menuState]);
 
   let openMenu = () => {
+    setMenuState(true);
     setHeaderAnim("openSideHeader");
   };
 
   let closeMenu = () => {
+    setMenuState(false);
     setHeaderAnim("closeSideHeader");
   };
 
@@ -93,12 +98,12 @@ export function Header() {
   return (
     <div id="header">
       <div className="placeholder-top"></div>
-      <div
+      {/* <div
         className="side-header-trigger"
         onMouseOver={openMenu}
         onMouseLeave={closeMenu}
         style={{ display: menuTriggerDisplay }}
-      ></div>
+      ></div> */}
 
       <div className="top-header">
         <div className="top-header-wrap outer">

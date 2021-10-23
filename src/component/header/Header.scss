@@ -131,6 +131,7 @@
   width: 75%;
   align-self: center;
   image-rendering: pixelated;
+  -webkit-user-drag: none;
 }
 .box-image.logo {
   width: inherit !important;

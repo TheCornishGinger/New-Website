@@ -5,11 +5,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home } from "./page/home/Home";
 import { Header } from "./component/header/Header";
 import { Games } from "./page/games/Games";
+import { Window } from "./component/window/Window";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header />
       <div id="content">
         <div className="page-wrap">
           <div className="vertical-center max-width">
@@ -23,7 +24,8 @@ function App() {
             </Switch>
           </div>
         </div>
-      </div>
+      </div> */}
+      <Window></Window>
     </BrowserRouter>
   );
 }

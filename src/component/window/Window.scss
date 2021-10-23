@@ -1,0 +1,103 @@
+.window {
+  --window-w: 300px;
+  --window-h: 200px;
+  --body-h: calc(var(--window-h) - var(--control-bar-h));
+  --control-bar-h: 22px;
+  --body-color: #181818;
+  --drag-border-size: 5px;
+
+  height: fit-content;
+  position: absolute;
+}
+
+.window-control-bar {
+  height: var(--control-bar-h);
+  background-color: #434847;
+  z-index: 3;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
+  display: flex;
+}
+
+.window-title {
+  margin: 0;
+  right: calc(var(--control-bar-h) * 0.125);
+  position: absolute;
+  font-size: 30px;
+  top: -1px;
+  color: #a3a3a3;
+}
+
+.window-btn-text {
+  margin: 0;
+  text-align: center;
+  font-size: 24px;
+  margin-top: -3px;
+}
+
+.window-body {
+  background-color: var(--body-color);
+  //height: var(--body-h);
+  //border: 2px solid #434847;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.window-content {
+  border-width: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.window-drag-area {
+  height: 100%;
+  width: 100%;
+}
+
+.window-buttons {
+  display: flex;
+  width: fit-content;
+  padding: calc(var(--control-bar-h) * 0.125);
+}
+
+.resize-box {
+  background-color: var(--window-bg-color);
+  position: absolute;
+}
+
+.resize-box.left {
+  height: var(--body-h);
+  width: var(--drag-border-size);
+  left: 0;
+}
+
+.resize-box.bottom {
+  width: 100%;
+  height: var(--drag-border-size);
+  bottom: 0;
+}
+
+.resize-box.right {
+  height: var(--body-h);
+  width: var(--drag-border-size);
+  right: 0;
+}
+
+.window-btn {
+  width: calc(var(--control-bar-h) * 0.75);
+  height: calc(var(--control-bar-h) * 0.75);
+  border-radius: 50%;
+  margin-left: calc(var(--control-bar-h) * 0.125);
+}
+
+.window-btn.close {
+  background-color: red;
+}
+
+.window-btn.min {
+  background-color: orange;
+}
+
+.window-btn.max {
+  background-color: green;
+}

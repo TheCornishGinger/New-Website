@@ -250,7 +250,7 @@ export function Window() {
             </p>
           </div>
         </div>
-        <div className="window-drag-area" onMouseDown={enableDrag}>
+        <div className="window-drag-area" onPointerDown={enableDrag}>
           <div>
             <p className="window-title">{windowTitle}</p>
           </div>

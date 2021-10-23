@@ -8,37 +8,53 @@
 
   height: fit-content;
   position: absolute;
+  font-family: system-ui;
+  filter: drop-shadow(2px 4px 6px black);
 }
 
 .window-control-bar {
-  height: var(--control-bar-h);
   background-color: #434847;
   z-index: 3;
   border-top-left-radius: 5px !important;
   border-top-right-radius: 5px !important;
   display: flex;
+  filter: drop-shadow(0 0 2px black);
 }
 
 .window-title {
-  margin: 0;
-  right: calc(var(--control-bar-h) * 0.125);
-  position: absolute;
-  font-size: 30px;
-  top: -1px;
-  color: #a3a3a3;
+  margin: auto;
+  font-size: 16px;
+  color: #c7c7c7;
+  text-align: end;
+  margin-right: calc(var(--control-bar-h) * 0.2);
 }
 
 .window-btn-text {
   margin: 0;
   text-align: center;
-  font-size: 24px;
-  margin-top: -3px;
+  animation-duration: 400ms;
+}
+
+.window-btn-text.min {
+  font-size: 28px;
+  margin-top: -13px;
+  font-weight: 400;
+}
+
+.window-btn-text.close {
+  font-weight: 600;
+  margin-top: -4px;
+}
+
+.window-btn-text.max {
+  font-size: 11px;
+  transform: rotate(0.87turn);
+  margin-left: -1px;
+  font-weight: 1000;
 }
 
 .window-body {
   background-color: var(--body-color);
-  //height: var(--body-h);
-  //border: 2px solid #434847;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -56,8 +72,7 @@
 
 .window-buttons {
   display: flex;
-  width: fit-content;
-  padding: calc(var(--control-bar-h) * 0.125);
+  margin: auto;
 }
 
 .resize-box {
@@ -87,7 +102,9 @@
   width: calc(var(--control-bar-h) * 0.75);
   height: calc(var(--control-bar-h) * 0.75);
   border-radius: 50%;
-  margin-left: calc(var(--control-bar-h) * 0.125);
+  margin-left: calc(var(--control-bar-h) * 0.2);
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
 }
 
 .window-btn.close {
@@ -100,4 +117,40 @@
 
 .window-btn.max {
   background-color: green;
+}
+
+@keyframes btnEnter {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(0.8);
+  }
+}
+
+@keyframes btnLeave {
+  from {
+    filter: brightness(0.8);
+  }
+  to {
+    filter: brightness(1);
+  }
+}
+
+@keyframes textEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes textLeave {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

@@ -1,10 +1,11 @@
 // import React from "react";
 // import logo from "./logo.svg";
 import "./App.scss";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Home } from "./page/home/Home";
-import { Header } from "./component/header/Header";
-import { Games } from "./page/games/Games";
+import { BrowserRouter } from "react-router-dom";
+//import { Route, Switch } from "react-router-dom";
+// import { Home } from "./page/home/Home";
+// import { Header } from "./component/header/Header";
+// import { Games } from "./page/games/Games";
 import { Window } from "./component/window/Window";
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
           </div>
         </div>
       </div> */}
-      <Window></Window>
+      <Window />
     </BrowserRouter>
   );
 }

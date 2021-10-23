@@ -2,7 +2,7 @@ import logo from "../../resource/image/logo.gif";
 
 export function Home() {
   return (
-    <div className="window">
+    <>
       <p className="text large">The home of</p>
       <img className="image" src={logo} alt="TCG Games Logo" />
       <p className="text medium">
@@ -10,6 +10,6 @@ export function Home() {
         stuff. I trust you will enjoy searching through my unfinished, unpolished and
         mostly useless creations!
       </p>
-    </div>
+    </>
   );
 }

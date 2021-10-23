@@ -8,16 +8,18 @@ import { isTouchDevice } from "../../globalFunctions";
 import { Link } from "react-router-dom";
 
 export function Header() {
+  let headerSize = 80;
+
   // STATES
   let [init, setInit] = useState<boolean>(false);
   let [menuState, setMenuState] = useState<boolean>(false);
   let [sideHeaderClass, setSideHeaderClass] = useState<string>("side-header");
-  let [headerSize, setHeaderSize] = useState<number>(80);
+  //let [headerSize, setHeaderSize] = useState<number>(80);
 
   // ANIMATION
   let [headerAnim, setHeaderAnim] = useState<string>();
   let [menuBtnColor, setMenuBtnColor] = useState<string>();
-  let [menuBtnChildAnim, setMenuBtnChildAnim] = useState<string>();
+  //let [menuBtnChildAnim, setMenuBtnChildAnim] = useState<string>();
   let [menuBtnClosedAnim, setMenuBtnClosedAnim] = useState<string>();
   let [menuBtnOpen1Anim, setMenuBtnOpen1Anim] = useState<string>();
   let [menuBtnOpen2Anim, setMenuBtnOpen2Anim] = useState<string>();
@@ -44,7 +46,7 @@ export function Header() {
         document.removeEventListener("mousemove", mouseEvent);
       };
     }
-  }, [init, menuState]);
+  }, [init, menuState, headerSize]);
 
   let openMenu = () => {
     setMenuState(true);
@@ -134,15 +136,15 @@ export function Header() {
               >
                 <div
                   className="menu-btn-child closed"
-                  style={{ animationName: menuBtnChildAnim }}
+                  //style={{ animationName: menuBtnChildAnim }}
                 ></div>
                 <div
                   className="menu-btn-child closed"
-                  style={{ animationName: menuBtnChildAnim }}
+                  //style={{ animationName: menuBtnChildAnim }}
                 ></div>
                 <div
                   className="menu-btn-child closed"
-                  style={{ animationName: menuBtnChildAnim }}
+                  //style={{ animationName: menuBtnChildAnim }}
                 ></div>
               </div>
               <div

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import "./Window.scss";
 
 export function Window() {
+  let videoList = ["izGwDsrQ1eQ", "dQw4w9WgXcQ", "y6120QOlsfU"];
+  let [randomVideo, setRandomVideo] = useState<string>();
+
   let [controlBarSize, setControlBarSize] = useState<number>(22);
   let [controlBarBorder, setControlBarBorder] = useState<number>(0);
   let [windowDrag, setWindowDrag] = useState<boolean>(false);
@@ -18,7 +21,6 @@ export function Window() {
   let [oldWindowSize, setOldWindowSize] = useState<number[]>([0, 0]);
   let [oldWindowPos, setOldWindowPos] = useState<number[]>([0, 0]);
   let [cursorIcon, setCursorIcon] = useState<string>("default");
-  let [cursorPos, setCursorPos] = useState<number[]>([0, 0]);
   let [windowDisplay, setWindowDisplay] = useState<string>("block");
   let [windowBodyDisplay, setWindowBodyDisplay] = useState<string>("block");
   let [windowContentDisplay, setWindowContentDisplay] = useState<string>("block");
@@ -27,6 +29,16 @@ export function Window() {
   let [maxIconDisplay, setMaxIconDisplay] = useState<string>("none");
   let [windowTitle, setWindowTitle] = useState<string>("Window");
   let [windowDragOffset, setWindowDragOffset] = useState<number[]>([0, 0]);
+  let [maxBtnText, setMaxBtnText] = useState<string>("<>");
+
+  // ANIMATION
+  let btnAnimTime = 150;
+  let [closeBtnAnim, setCloseBtnAnim] = useState<string>();
+  let [closeBtnTextAnim, setCloseBtnTextAnim] = useState<string>();
+  let [minBtnAnim, setMinBtnAnim] = useState<string>();
+  let [minBtnTextAnim, setMinBtnTextAnim] = useState<string>();
+  let [maxBtnAnim, setMaxBtnAnim] = useState<string>();
+  let [maxBtnTextAnim, setMaxBtnTextAnim] = useState<string>();
 
   useEffect(() => {
     let mouseMove = (e: MouseEvent) => {
@@ -43,7 +55,6 @@ export function Window() {
 
   useEffect(() => {
     let mouseDown = (e: MouseEvent) => {
-      setCursorPos([e.x, e.y]);
       if (!windowFullscreen) {
         setWindowDragOffset([e.x - windowPos[0], e.y - windowPos[1]]);
       }
@@ -52,7 +63,7 @@ export function Window() {
     return () => {
       document.removeEventListener("mousedown", mouseDown);
     };
-  }, [windowPos]);
+  }, [windowPos, windowFullscreen]);
 
   useEffect(() => {
     let mouseUp = () => {
@@ -68,11 +79,11 @@ export function Window() {
   }, [windowDrag]);
 
   let enableDrag = () => {
-    if (windowFullscreen) {
-      setWindowSize(oldWindowSize);
-      setWindowFullscreen(false);
-    }
     if (!windowResize) {
+      if (windowFullscreen) {
+        setWindowSize(oldWindowSize);
+        setWindowFullscreen(false);
+      }
       setWindowContentDisplay("none");
       setCursorIcon("grabbing");
       setWindowDrag(true);
@@ -90,10 +101,16 @@ export function Window() {
     }
   };
   let enterCloseBtn = () => {
+    setCloseBtnAnim("btnEnter");
+    setCloseBtnTextAnim("textEnter");
     setCloseIconDisplay("block");
   };
   let leaveCloseBtn = () => {
-    setCloseIconDisplay("none");
+    setCloseBtnAnim("btnLeave");
+    setCloseBtnTextAnim("textLeave");
+    setTimeout(() => {
+      setCloseIconDisplay("none");
+    }, btnAnimTime);
   };
 
   // MIN BUTTON
@@ -109,10 +126,16 @@ export function Window() {
     }
   };
   let enterMinBtn = () => {
+    setMinBtnAnim("btnEnter");
+    setMinBtnTextAnim("textEnter");
     setMinIconDisplay("block");
   };
   let leaveMinBtn = () => {
-    setMinIconDisplay("none");
+    setMinBtnAnim("btnLeave");
+    setMinBtnTextAnim("textLeave");
+    setTimeout(() => {
+      setMinIconDisplay("none");
+    }, btnAnimTime);
   };
 
   // MAX BUTTON
@@ -121,20 +144,28 @@ export function Window() {
       if (windowFullscreen) {
         setWindowSize(oldWindowSize);
         setWindowPos(oldWindowPos);
+        setMaxBtnText("<>");
       } else {
         setOldWindowPos(windowPos);
         setWindowPos([0, 0]);
         setOldWindowSize(windowSize);
         setWindowSize([window.innerWidth, window.innerHeight]);
+        setMaxBtnText("><");
       }
       setWindowFullscreen(!windowFullscreen);
     }
   };
   let enterMaxBtn = () => {
+    setMaxBtnAnim("btnEnter");
+    setMaxBtnTextAnim("textEnter");
     setMaxIconDisplay("block");
   };
   let leaveMaxBtn = () => {
-    setMaxIconDisplay("none");
+    setMaxBtnAnim("btnLeave");
+    setMaxBtnTextAnim("textLeave");
+    setTimeout(() => {
+      setMaxIconDisplay("none");
+    }, btnAnimTime);
   };
 
   // CURSOR
@@ -148,9 +179,21 @@ export function Window() {
     setCursorIcon("default");
   };
 
+  let windowInit = () => {
+    setWindowTitle(windowTitle);
+    setControlBarSize(22);
+  };
+
+  let getRandomVideo = () => {
+    if (!randomVideo) {
+      setRandomVideo(videoList[Math.floor(Math.random() * videoList.length)]);
+    }
+  };
+
   return (
     <div
       className="window"
+      onLoad={windowInit}
       style={{
         display: windowDisplay,
         top: windowPos[1],
@@ -159,36 +202,51 @@ export function Window() {
         cursor: cursorIcon,
       }}
     >
-      <div className="window-control-bar" style={{ borderRadius: controlBarBorder }}>
+      <div
+        className="window-control-bar"
+        style={{ borderRadius: controlBarBorder, height: controlBarSize }}
+      >
         <div className="window-buttons">
           <div
             className="window-btn close"
+            style={{ animationName: closeBtnAnim }}
             onClick={closeWindow}
             onMouseEnter={enterCloseBtn}
             onMouseLeave={leaveCloseBtn}
           >
-            <p className="window-btn-text" style={{ display: closeIconDisplay }}>
+            <p
+              className="window-btn-text close"
+              style={{ display: closeIconDisplay, animationName: closeBtnTextAnim }}
+            >
               x
             </p>
           </div>
           <div
             className="window-btn min"
+            style={{ animationName: minBtnAnim }}
             onClick={minWindow}
             onMouseEnter={enterMinBtn}
             onMouseLeave={leaveMinBtn}
           >
-            <p className="window-btn-text" style={{ display: minIconDisplay }}>
+            <p
+              className="window-btn-text min"
+              style={{ display: minIconDisplay, animationName: minBtnTextAnim }}
+            >
               -
             </p>
           </div>
           <div
             className="window-btn max"
+            style={{ animationName: maxBtnAnim }}
             onClick={maxWindow}
             onMouseEnter={enterMaxBtn}
             onMouseLeave={leaveMaxBtn}
           >
-            <p className="window-btn-text" style={{ display: maxIconDisplay }}>
-              +
+            <p
+              className="window-btn-text max"
+              style={{ display: maxIconDisplay, animationName: maxBtnTextAnim }}
+            >
+              {maxBtnText}
             </p>
           </div>
         </div>
@@ -222,9 +280,11 @@ export function Window() {
           onMouseLeave={setCursorNormal}
         ></div>
         <iframe
+          title={windowTitle}
+          onLoad={getRandomVideo}
+          allowFullScreen={false}
           className="window-content"
-          same-site="Strict"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&autopause=0"
+          src={"https://www.youtube.com/embed/" + randomVideo + "?autoplay=1"}
           style={{ display: windowContentDisplay }}
         ></iframe>
       </div>

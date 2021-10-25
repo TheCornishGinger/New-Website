@@ -1,8 +1,11 @@
 @import "page/home/Home.scss";
 
 :root {
-  --page-bg-color: rgb(10, 15, 15);
-  --page-text-color: rgb(100, 115, 115);
+  --theme-dark: rgb(10, 15, 15);
+  --theme-medium: rgb(20, 26, 26);
+  --theme-light: rgb(32, 40, 40);
+  --theme-text: rgb(100, 115, 115);
+
   --max-width: 50vw;
   --loader-size: 3vw;
   --max-blur: 10px;
@@ -10,12 +13,21 @@
 
 html,
 body {
-  background-color: var(--page-bg-color);
+  background-color: var(--theme-dark);
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
   font-family: "monospace", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #loader {
@@ -122,7 +134,7 @@ body {
 .text {
   font-family: "monospace";
   font-weight: normal;
-  color: var(--page-text-color);
+  color: var(--theme-text);
   text-align: center;
 }
 

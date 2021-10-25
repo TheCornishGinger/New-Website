@@ -6,9 +6,6 @@
   --menu-btn-width: 65%;
   --menu-btn-height: 65%;
 
-  --top-header-color: rgb(32, 40, 40);
-  --side-header-color: rgb(20, 26, 26);
-
   --logo-color: rgb(224, 102, 61);
   --title-color: rgb(222, 80, 33);
 
@@ -37,7 +34,7 @@
   left: 0;
   top: 0;
   width: 100%;
-  background-color: var(--top-header-color);
+  background-color: var(--theme-light);
   height: var(--header-size);
 }
 
@@ -71,7 +68,7 @@
   top: var(--header-size);
   width: var(--header-size);
   height: 100%;
-  background-color: var(--side-header-color);
+  background-color: var(--theme-medium);
   animation-duration: 300ms;
   animation-fill-mode: forwards;
 }
@@ -95,7 +92,7 @@
 // BOX
 //
 .box {
-  background-color: gray;
+  background-color: var(--theme-light);
   margin: auto;
   width: var(--box-size);
   height: var(--box-size);

@@ -121,7 +121,7 @@ export function Window() {
       setOldWindowSize(windowSize);
       setWindowContentSize(windowSize);
     }
-  }, [windowResize]);
+  }, [windowResize, windowSize]);
 
   // WINDOW DRAG
   useEffect(() => {

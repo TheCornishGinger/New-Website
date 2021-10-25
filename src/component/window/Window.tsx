@@ -121,7 +121,8 @@ export function Window() {
       setOldWindowSize(windowSize);
       setWindowContentSize(windowSize);
     }
-  }, [windowResize, windowSize]);
+    //eslint-disable-next-line
+  }, [windowResize]);
 
   // WINDOW DRAG
   useEffect(() => {

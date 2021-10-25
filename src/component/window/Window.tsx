@@ -1,4 +1,4 @@
-import { PureComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Window.scss";
 
 export function Window() {

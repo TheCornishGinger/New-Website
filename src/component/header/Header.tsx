@@ -86,12 +86,18 @@ export function Header() {
     setMenuState(!menuState);
   };
 
+  let useless = () => {
+    return menuTriggerDisplay; //USED TO FIX BUILD ERROR
+  };
+
   // ON INIT
   if (!init) {
     if (isTouchDevice()) {
       setMenuBtnDisplay("flex");
       setMenuTriggerDisplay("none");
       setSideHeaderClass(sideHeaderClass + " mobile");
+
+      useless(); // REMOVE LATER
     }
     setInit(true);
   }

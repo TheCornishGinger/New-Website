@@ -4,21 +4,29 @@
   --body-h: calc(var(--window-h) - var(--control-bar-h));
   --control-bar-h: 22px;
   --body-color: #181818;
-  --drag-border-size: 5px;
+  --drag-border-size: 6px;
+  z-index: 5;
 
   height: fit-content;
   position: absolute;
   font-family: system-ui;
   filter: drop-shadow(2px 4px 6px black);
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
 }
 
 .window-control-bar {
-  background-color: #434847;
+  background-color: var(--theme-light);
   z-index: 3;
   border-top-left-radius: 5px !important;
   border-top-right-radius: 5px !important;
   display: flex;
   filter: drop-shadow(0 0 2px black);
+}
+
+.window-title-wrap {
+  display: flex;
+  margin: auto;
 }
 
 .window-title {
@@ -54,15 +62,20 @@
 }
 
 .window-body {
-  background-color: var(--body-color);
+  background-color: var(--theme-medium);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
 }
 
 .window-content {
   border-width: 0;
-  height: 100%;
-  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin: 0 auto auto;
 }
 
 .window-drag-area {
@@ -73,6 +86,7 @@
 .window-buttons {
   display: flex;
   margin: auto;
+  margin-left: calc(var(--control-bar-h) * 0.2);
 }
 
 .resize-box {
@@ -102,21 +116,21 @@
   width: calc(var(--control-bar-h) * 0.75);
   height: calc(var(--control-bar-h) * 0.75);
   border-radius: 50%;
-  margin-left: calc(var(--control-bar-h) * 0.2);
+  margin-right: calc(var(--control-bar-h) * 0.2);
   animation-duration: 200ms;
   animation-fill-mode: forwards;
 }
 
 .window-btn.close {
-  background-color: red;
+  background-color: #fd3939;
 }
 
 .window-btn.min {
-  background-color: orange;
+  background-color: #ffb100;
 }
 
 .window-btn.max {
-  background-color: green;
+  background-color: #2c9b2c;
 }
 
 @keyframes btnEnter {
@@ -152,5 +166,25 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes hideWindow {
+  from {
+  }
+  to {
+    height: 0;
+    display: none;
+  }
+}
+
+@keyframes maxWindow {
+  from {
+  }
+  to {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 }

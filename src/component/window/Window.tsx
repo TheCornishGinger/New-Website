@@ -9,8 +9,9 @@ export function Window() {
     "L_jWHffIx5E",
     "k85mRPqvMbE",
   ];
+  let windowSource = "/apps/about-me";
   let [randomVideo, setRandomVideo] = useState<string>();
-
+  //eslint-disable-next-line
   let [controlBarSize, setControlBarSize] = useState<number>(30);
   let [controlBarBorder, setControlBarBorder] = useState<number>(0);
   let [windowDrag, setWindowDrag] = useState<boolean>(false);
@@ -40,6 +41,7 @@ export function Window() {
   let [closeIconDisplay, setCloseIconDisplay] = useState<"block" | "none">("none");
   let [minIconDisplay, setMinIconDisplay] = useState<"block" | "none">("none");
   let [maxIconDisplay, setMaxIconDisplay] = useState<"block" | "none">("none");
+  //eslint-disable-next-line
   let [windowTitle, setWindowTitle] = useState<string>("Window");
   let [windowDragOffset, setWindowDragOffset] = useState<number[]>([0, 0]);
   let [maxBtnText, setMaxBtnText] = useState<"<>" | "><">("<>");
@@ -282,11 +284,10 @@ export function Window() {
 
   // INIT
   let windowInit = () => {
-    setWindowTitle(windowTitle);
-    setControlBarSize(30);
     setOldWindowSize(windowSize);
   };
 
+  //eslint-disable-next-line
   let getRandomVideo = () => {
     if (!randomVideo) {
       setRandomVideo(videoList[Math.floor(Math.random() * videoList.length)]);
@@ -390,10 +391,10 @@ export function Window() {
         ></div>
         <iframe
           title={windowTitle}
-          onLoad={getRandomVideo}
-          allowFullScreen={false}
+          //onLoad={getRandomVideo}
+          //allowFullScreen={false}
           className="window-content"
-          src={"https://www.youtube.com/embed/" + randomVideo + "?autoplay=1"}
+          src={windowSource} //{"https://www.youtube.com/embed/" + randomVideo + "?autoplay=1"}
           style={{
             width: windowContentSize[0] - 2,
             height: windowContentSize[1] - controlBarSize - 1,

@@ -1,0 +1,36 @@
+.browserApp.bar-top {
+  width: 100%;
+  background-color: var(--theme-medium);
+  display: flex;
+}
+
+.browserApp.bar-bottom {
+  width: 100%;
+  height: 45px;
+  background-color: var(--theme-medium);
+}
+
+.browserApp.bar-content-wrap {
+  display: flex;
+  margin: auto;
+}
+
+.browserApp.prefixText {
+  color: white;
+  margin: 0;
+  font-family: system-ui;
+  margin-right: 5px;
+}
+
+.browserApp.searchBar {
+  background-color: var(--theme-dark);
+  border: 1px solid var(--theme-medium);
+  border-radius: 5px;
+  height: 22px;
+  color: white;
+}
+
+.browserApp.frame {
+  width: 100%;
+  border: 0;
+}

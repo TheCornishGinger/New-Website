@@ -25,6 +25,7 @@ export function Header() {
   let [menuBtnOpen2Anim, setMenuBtnOpen2Anim] = useState<string>();
 
   // DISPLAY
+  //eslint-disable-next-line
   let [menuTriggerDisplay, setMenuTriggerDisplay] = useState<string>("block"); //pc only
   let [menuBtnDisplay, setMenuBtnDisplay] = useState<string>("none");
   let [menuBtnClosedDisplay, setMenuBtnClosedDisplay] = useState<string>("flex");
@@ -86,18 +87,12 @@ export function Header() {
     setMenuState(!menuState);
   };
 
-  let useless = () => {
-    return menuTriggerDisplay; //USED TO FIX BUILD ERROR
-  };
-
   // ON INIT
   if (!init) {
     if (isTouchDevice()) {
       setMenuBtnDisplay("flex");
       setMenuTriggerDisplay("none");
       setSideHeaderClass(sideHeaderClass + " mobile");
-
-      useless(); // REMOVE LATER
     }
     setInit(true);
   }
@@ -189,26 +184,30 @@ export function Header() {
                 <p className="box-text">Games</p>
               </div>
             </Link>
-            <div
-              className="box side projects"
-              //   onmouseover="buttonHover('projects')"
-              //   onclick="buttonPress('projects')"
-              //   onmouseleave="buttonUnhover('projects')"
-              id="projects-btn"
-            >
-              <img src={projectsImg} className="box-image" alt="Projects" />
-              <p className="box-text">Projects</p>
-            </div>
-            <div
-              className="box side"
-              //   onmouseover="buttonHover('bio')"
-              //   onclick="buttonPress('bio')"
-              //   onmouseleave="buttonUnhover('bio')"
-              id="bio-btn"
-            >
-              <img src={bioImg} className="box-image" alt="Bio" />
-              <p className="box-text">Bio</p>
-            </div>
+            <Link to="/projects">
+              <div
+                className="box side projects"
+                //   onmouseover="buttonHover('projects')"
+                //   onclick="buttonPress('projects')"
+                //   onmouseleave="buttonUnhover('projects')"
+                id="projects-btn"
+              >
+                <img src={projectsImg} className="box-image" alt="Projects" />
+                <p className="box-text">Projects</p>
+              </div>
+            </Link>
+            <Link to="/about">
+              <div
+                className="box side"
+                //   onmouseover="buttonHover('bio')"
+                //   onclick="buttonPress('bio')"
+                //   onmouseleave="buttonUnhover('bio')"
+                id="bio-btn"
+              >
+                <img src={bioImg} className="box-image" alt="Bio" />
+                <p className="box-text">Bio</p>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="side-header-text">

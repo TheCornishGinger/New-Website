@@ -42,11 +42,7 @@ function App() {
         </Route>
         <Route exact path="/about">
           <Header />
-          <div className="page-wrap">
-            <div className="margin-auto max-width">
-              <Window />
-            </div>
-          </div>
+          <Window />
         </Route>
         <Route exact path="/apps">
           <Window />

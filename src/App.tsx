@@ -2,15 +2,19 @@
 // import logo from "./logo.svg";
 import "./App.scss";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import { Home } from "./page/home/Home";
 import { Header } from "./component/header/Header";
-import { Games } from "./page/games/Games";
 import { Window } from "./component/window/Window";
+
+// Pages
+import { Home } from "./page/home/Home";
+import { Games } from "./page/games/Games";
+import { Projects } from "./page/projects/Projects";
+import { AboutMe } from "./page/about-me/AboutMe";
 
 // Apps
 import { BrowserApp } from "./component/apps/browser/BrowserApp";
-import { Projects } from "./page/projects/Projects";
-import { AboutMe } from "./component/apps/about-me/AboutMeApp";
+import { AboutMeApp } from "./component/apps/about-me/AboutMeApp";
+import { ShowcaseApp } from "./component/apps/showcase/ShowcaseApp";
 
 function App() {
   return (
@@ -18,11 +22,7 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Header />
-          <div className="page-wrap">
-            <div className="margin-auto max-width">
-              <Home />
-            </div>
-          </div>
+          <Home />
         </Route>
         <Route exact path="/games">
           <Header />
@@ -42,16 +42,16 @@ function App() {
         </Route>
         <Route exact path="/about">
           <Header />
-          <Window />
-        </Route>
-        <Route exact path="/apps">
-          <Window />
+          <AboutMe />
         </Route>
         <Route exact path="/apps/browser">
           <BrowserApp />
         </Route>
         <Route exact path="/apps/about-me">
-          <AboutMe />
+          <AboutMeApp />
+        </Route>
+        <Route exact path="/apps/showcase">
+          <ShowcaseApp />
         </Route>
       </Switch>
     </BrowserRouter>

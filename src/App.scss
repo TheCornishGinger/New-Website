@@ -13,7 +13,6 @@
 
 html,
 body {
-  background-color: var(--theme-dark);
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
@@ -101,7 +100,12 @@ body {
   overflow-y: hidden;
 }
 
+.flex {
+  display: flex;
+}
+
 .page-wrap {
+  background-color: var(--theme-dark);
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--header-size));
@@ -110,7 +114,7 @@ body {
 }
 
 .margin-auto {
-  margin: auto;
+  margin: auto !important;
 }
 
 .max-width {

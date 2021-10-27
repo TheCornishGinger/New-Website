@@ -14,10 +14,10 @@ export function BrowserApp() {
       </div>
       <iframe
         title="BrowserPage"
+        src="http://www.bing.com"
         className={css + "frame"}
         style={{ height: window.innerHeight - searchBarHeight * 2 }}
       ></iframe>
-      <div className={css + "bar-bottom"}></div>
     </>
   );
 }

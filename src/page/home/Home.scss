@@ -1,9 +1,30 @@
-.image {
-  margin-top: 50px !important;
-  margin-bottom: 60px !important;
-  width: 80%;
-  max-width: var(--max-width);
+.title-img {
+  margin-top: 20px !important;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  image-rendering: pixelated;
+  margin-bottom: 8%;
+  margin-right: 5%;
+}
+
+.window-wrap {
+  margin: 0 10% 4%;
+}
+
+.home-desc {
+  margin: 0 15% !important;
+}
+
+.screen-left-wrap {
+  flex: 1;
+  align-items: end;
+  flex-direction: column;
   display: flex;
   margin: auto;
-  image-rendering: pixelated;
+  border-right: 4px solid var(--theme-medium);
+}
+
+.title-text {
+  margin: 5% 5% 0 0 !important;
 }

@@ -1,15 +1,44 @@
 import { useEffect, useState } from "react";
 import "./Window.scss";
 
-export function Window() {
-  let videoList = [
+type WindowProps = {
+  src: string;
+  title?: string;
+  size?: number[];
+  position?: number[];
+  placeholder?: boolean;
+  fixedPlace?: boolean;
+  // setMyVariable: (variable: string) => void; // func that takes a string and returns void
+};
+
+export function Window({
+  src,
+  title,
+  size,
+  position,
+  placeholder,
+  fixedPlace,
+}: WindowProps) {
+  const _title = title || "Window";
+  const _placeholder = placeholder || false;
+  const _fixedPlace = fixedPlace || false;
+  const _size = size || [
+    Math.floor(window.innerWidth / 2),
+    Math.floor(window.innerHeight / 2),
+  ];
+  const _position = position || [
+    window.innerWidth / 2 - _size[0] / 2,
+    window.innerHeight / 2 - _size[1] / 2,
+  ];
+
+  // RANDOM VIDEO STUFF
+  const videoList = [
     "izGwDsrQ1eQ",
     "dQw4w9WgXcQ",
     "y6120QOlsfU",
     "L_jWHffIx5E",
     "k85mRPqvMbE",
   ];
-  let windowSource = "/apps/about-me";
   let [randomVideo, setRandomVideo] = useState<string>();
   //eslint-disable-next-line
   let [controlBarSize, setControlBarSize] = useState<number>(30);
@@ -19,21 +48,19 @@ export function Window() {
   let [windowResizeState, setWindowResizeState] = useState<
     "bottom" | "left" | "right"
   >();
+  let [windowPositionType, setWindowPositionType] = useState<"absolute" | "initial">(
+    "absolute"
+  );
   let [windowFullscreen, setWindowFullscreen] = useState<boolean>(false);
-  let [windowSize, setWindowSize] = useState<number[]>([
-    Math.floor(window.innerWidth / 2),
-    Math.floor(window.innerHeight / 2),
-  ]);
+  let [windowSize, setWindowSize] = useState<any>(_size);
+  let [rawWidth, setRawWidth] = useState<any>();
   let [bodyHeight, setBodyHeight] = useState<number>();
-  let [windowPos, setWindowPos] = useState<number[]>([
-    window.innerWidth / 2 - windowSize[0] / 2,
-    window.innerHeight / 2 - windowSize[1] / 2,
-  ]);
+  let [windowPos, setWindowPos] = useState<number[]>(_position);
   let [windowContentSize, setWindowContentSize] = useState<number[]>([0, 0]);
   let [oldWindowSize, setOldWindowSize] = useState<number[]>([0, 0]);
   let [oldWindowPos, setOldWindowPos] = useState<number[]>([0, 0]);
   let [cursorIcon, setCursorIcon] = useState<string>("default");
-  let [windowDisplay, setWindowDisplay] = useState<"block" | "none">("block");
+  let [windowDisplay, setWindowDisplay] = useState<"block" | "none">("none");
   let [windowBodyDisplay, setWindowBodyDisplay] = useState<"flex" | "none">("flex");
   let [windowContentInteraction, setWindowContentInteraction] = useState<
     "all" | "none"
@@ -42,9 +69,12 @@ export function Window() {
   let [minIconDisplay, setMinIconDisplay] = useState<"block" | "none">("none");
   let [maxIconDisplay, setMaxIconDisplay] = useState<"block" | "none">("none");
   //eslint-disable-next-line
-  let [windowTitle, setWindowTitle] = useState<string>("Window");
+  let [windowTitle, setWindowTitle] = useState<string>(_title);
   let [windowDragOffset, setWindowDragOffset] = useState<number[]>([0, 0]);
   let [maxBtnText, setMaxBtnText] = useState<"<>" | "><">("<>");
+  let [controlBtnColor, setControlBtnColor] = useState<" none" | " disabled">(
+    " none"
+  );
 
   // ANIMATION
   let btnAnimTime = 150;
@@ -56,6 +86,19 @@ export function Window() {
   let [maxBtnTextAnim, setMaxBtnTextAnim] = useState<string>();
   let [windowAnim, setWindowAnim] = useState<"none" | "maxWindow">();
   let [windowBodyAnim, setWindowBodyAnim] = useState<"none" | "hideWindow">();
+
+  //PLACEHOLDER
+  let [placeholderSize, setPlaceholderSize] = useState<number[]>([0, 0]);
+  let [placeholderDisplay, setPlaceholderDisplay] = useState<"block" | "none">(
+    "none"
+  );
+
+  // UPDATE RAW WIDTH
+  useEffect(() => {
+    if (!_fixedPlace) {
+      setRawWidth(windowSize[0]);
+    }
+  }, [_fixedPlace, windowSize]);
 
   // UPDATE BODY HEIGHT
   useEffect(() => {
@@ -160,7 +203,7 @@ export function Window() {
   }, [windowResize, windowDrag]);
 
   let enableDrag = () => {
-    if (!windowResize) {
+    if (!_fixedPlace && !windowResize) {
       if (windowFullscreen) {
         setWindowSize(oldWindowSize);
         setWindowFullscreen(false);
@@ -172,19 +215,19 @@ export function Window() {
 
   // ENABLE WINDOW RESIZE
   let enableResizeBottom = () => {
-    if (controlBarBorder === 0) {
+    if (!_fixedPlace && controlBarBorder === 0) {
       setWindowResizeState("bottom");
       setWindowResize(true);
     }
   };
   let enableResizeLeft = () => {
-    if (controlBarBorder === 0) {
+    if (!_fixedPlace && controlBarBorder === 0) {
       setWindowResizeState("left");
       setWindowResize(true);
     }
   };
   let enableResizeRight = () => {
-    if (controlBarBorder === 0) {
+    if (!_fixedPlace && controlBarBorder === 0) {
       setWindowResizeState("right");
       setWindowResize(true);
     }
@@ -192,7 +235,7 @@ export function Window() {
 
   // CLOSE BUTTON
   let closeWindow = () => {
-    if (!windowDrag && !windowResize) {
+    if (!_fixedPlace && !windowDrag && !windowResize) {
       setWindowDisplay("none");
     }
   };
@@ -211,7 +254,7 @@ export function Window() {
 
   // MIN BUTTON
   let minWindow = () => {
-    if (!windowDrag && !windowResize) {
+    if (!_fixedPlace && !windowDrag && !windowResize) {
       if (controlBarBorder > 0) {
         setWindowBodyDisplay("flex");
         setWindowBodyAnim("none");
@@ -237,7 +280,7 @@ export function Window() {
 
   // MAX BUTTON
   let maxWindow = () => {
-    if (!windowDrag && !windowResize) {
+    if (!_fixedPlace && !windowDrag && !windowResize) {
       if (windowFullscreen) {
         setWindowSize(oldWindowSize);
         setWindowContentSize(oldWindowSize);
@@ -273,18 +316,34 @@ export function Window() {
 
   // CURSOR
   let setCursorResizeW = () => {
-    setCursorIcon("e-resize");
+    if (!_fixedPlace) {
+      setCursorIcon("e-resize");
+    }
   };
   let setCursorResizeH = () => {
-    setCursorIcon("n-resize");
+    if (!_fixedPlace) {
+      setCursorIcon("n-resize");
+    }
   };
   let setCursorNormal = () => {
-    setCursorIcon("default");
+    if (!_fixedPlace) {
+      setCursorIcon("default");
+    }
   };
 
   // INIT
   let windowInit = () => {
-    setOldWindowSize(windowSize);
+    if (_placeholder || !_fixedPlace) {
+      setPlaceholderDisplay("block");
+    }
+    if (_fixedPlace) {
+      setWindowPositionType("initial");
+      setRawWidth("auto");
+      setControlBtnColor(" disabled");
+    }
+    setPlaceholderSize(_size);
+    setOldWindowSize(_size);
+    setWindowDisplay("block");
   };
 
   //eslint-disable-next-line
@@ -295,113 +354,127 @@ export function Window() {
   };
 
   return (
-    <div
-      className="window no-select"
-      onLoad={windowInit}
-      style={{
-        animationName: windowAnim,
-        display: windowDisplay,
-        top: windowPos[1],
-        left: windowPos[0],
-        width: windowSize[0],
-        cursor: cursorIcon,
-      }}
-    >
+    <>
       <div
-        className="window-control-bar"
-        style={{ borderRadius: controlBarBorder, height: controlBarSize }}
-      >
-        <div className="window-buttons">
-          <div
-            className="window-btn close"
-            style={{ animationName: closeBtnAnim }}
-            onClick={closeWindow}
-            onMouseEnter={enterCloseBtn}
-            onMouseLeave={leaveCloseBtn}
-          >
-            <p
-              className="window-btn-text close"
-              style={{ display: closeIconDisplay, animationName: closeBtnTextAnim }}
-            >
-              x
-            </p>
-          </div>
-          <div
-            className="window-btn min"
-            style={{ animationName: minBtnAnim }}
-            onClick={minWindow}
-            onMouseEnter={enterMinBtn}
-            onMouseLeave={leaveMinBtn}
-          >
-            <p
-              className="window-btn-text min"
-              style={{ display: minIconDisplay, animationName: minBtnTextAnim }}
-            >
-              -
-            </p>
-          </div>
-          <div
-            className="window-btn max"
-            style={{ animationName: maxBtnAnim }}
-            onClick={maxWindow}
-            onMouseEnter={enterMaxBtn}
-            onMouseLeave={leaveMaxBtn}
-          >
-            <p
-              className="window-btn-text max"
-              style={{ display: maxIconDisplay, animationName: maxBtnTextAnim }}
-            >
-              {maxBtnText}
-            </p>
-          </div>
-        </div>
-        <div className="window-drag-area" onPointerDown={enableDrag}></div>
-        <div className="window-title-wrap" onPointerDown={enableDrag}>
-          <p className="window-title">{windowTitle}</p>
-        </div>
-      </div>
-      <div
-        className="window-body"
+        id="window-placeholder"
         style={{
-          animationName: windowBodyAnim,
-          width: windowSize[0],
-          height: bodyHeight,
-          display: windowBodyDisplay,
+          width: placeholderSize[0],
+          height: placeholderSize[1],
+          display: placeholderDisplay,
+        }}
+      ></div>
+      <div
+        className="window no-select"
+        onLoad={windowInit}
+        style={{
+          position: windowPositionType,
+          animationName: windowAnim,
+          display: windowDisplay,
+          top: windowPos[1],
+          left: windowPos[0],
+          width: rawWidth,
+          cursor: cursorIcon,
         }}
       >
         <div
-          className="resize-box left"
-          style={{ height: bodyHeight }}
-          onMouseDown={enableResizeLeft}
-          onMouseEnter={setCursorResizeW}
-          onMouseLeave={setCursorNormal}
-        ></div>
+          className="window-control-bar"
+          style={{ borderRadius: controlBarBorder, height: controlBarSize }}
+        >
+          <div className="window-buttons">
+            <div
+              className={"window-btn close" + controlBtnColor}
+              style={{ animationName: closeBtnAnim }}
+              onClick={closeWindow}
+              onMouseEnter={enterCloseBtn}
+              onMouseLeave={leaveCloseBtn}
+            >
+              <p
+                className="window-btn-text close"
+                style={{
+                  display: closeIconDisplay,
+                  animationName: closeBtnTextAnim,
+                }}
+              >
+                x
+              </p>
+            </div>
+            <div
+              className={"window-btn min" + controlBtnColor}
+              style={{ animationName: minBtnAnim }}
+              onClick={minWindow}
+              onMouseEnter={enterMinBtn}
+              onMouseLeave={leaveMinBtn}
+            >
+              <p
+                className="window-btn-text min"
+                style={{ display: minIconDisplay, animationName: minBtnTextAnim }}
+              >
+                -
+              </p>
+            </div>
+            <div
+              className={"window-btn max" + controlBtnColor}
+              style={{ animationName: maxBtnAnim }}
+              onClick={maxWindow}
+              onMouseEnter={enterMaxBtn}
+              onMouseLeave={leaveMaxBtn}
+            >
+              <p
+                className="window-btn-text max"
+                style={{ display: maxIconDisplay, animationName: maxBtnTextAnim }}
+              >
+                {maxBtnText}
+              </p>
+            </div>
+          </div>
+          <div className="window-drag-area" onPointerDown={enableDrag}></div>
+          <div className="window-title-wrap" onPointerDown={enableDrag}>
+            <p className="window-title">{windowTitle}</p>
+          </div>
+        </div>
         <div
-          className="resize-box bottom"
-          onMouseDown={enableResizeBottom}
-          onMouseEnter={setCursorResizeH}
-          onMouseLeave={setCursorNormal}
-        ></div>
-        <div
-          className="resize-box right"
-          style={{ height: bodyHeight }}
-          onMouseDown={enableResizeRight}
-          onMouseEnter={setCursorResizeW}
-          onMouseLeave={setCursorNormal}
-        ></div>
-        <iframe
-          title={windowTitle}
-          //onLoad={getRandomVideo}
-          //allowFullScreen={false}
-          className="window-content"
-          src={windowSource} //{"https://www.youtube.com/embed/" + randomVideo + "?autoplay=1"}
+          className="window-body"
           style={{
-            width: windowContentSize[0] - 2,
-            height: windowContentSize[1] - controlBarSize - 1,
-            pointerEvents: windowContentInteraction,
+            animationName: windowBodyAnim,
+            width: rawWidth,
+            height: bodyHeight,
+            display: windowBodyDisplay,
           }}
-        ></iframe>
+        >
+          <div
+            className="resize-box left"
+            style={{ height: bodyHeight }}
+            onMouseDown={enableResizeLeft}
+            onMouseEnter={setCursorResizeW}
+            onMouseLeave={setCursorNormal}
+          ></div>
+          <div
+            className="resize-box bottom"
+            onMouseDown={enableResizeBottom}
+            onMouseEnter={setCursorResizeH}
+            onMouseLeave={setCursorNormal}
+          ></div>
+          <div
+            className="resize-box right"
+            style={{ height: bodyHeight }}
+            onMouseDown={enableResizeRight}
+            onMouseEnter={setCursorResizeW}
+            onMouseLeave={setCursorNormal}
+          ></div>
+          <iframe
+            title={windowTitle}
+            //onLoad={getRandomVideo}
+            //allowFullScreen={false}
+            className="window-content"
+            src={src} //{"https://www.youtube.com/embed/" + randomVideo + "?autoplay=1"}
+            style={{
+              width: windowContentSize[0] - 2,
+              height: windowContentSize[1] - controlBarSize - 1,
+              pointerEvents: windowContentInteraction,
+            }}
+          ></iframe>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

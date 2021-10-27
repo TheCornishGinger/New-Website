@@ -3,3 +3,22 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
+.gap {
+  height: 40px;
+}
+
+.note-text {
+  color: rgb(168, 168, 168);
+  margin: 0;
+}
+
+.note-text.red {
+  color: rgb(173, 36, 36) !important;
+}
+
+.note-box {
+  background-color: var(--theme-dark);
+  border: 10px solid var(--theme-dark);
+  border-radius: 6px;
+}

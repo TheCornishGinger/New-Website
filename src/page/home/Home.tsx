@@ -1,6 +1,7 @@
 import logo from "../../resource/image/logo.gif";
 import { Window } from "../../component/window/Window";
 import ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
 
 export function Home() {
   let renderWindow = () => {
@@ -35,9 +36,12 @@ export function Home() {
               <p>Loading window...</p>
             </div>
             <p className="text medium home-desc">
-              This is my personal site where I like to host a whole load of random
-              ass stuff. I trust you will enjoy searching through my unfinished,
-              unpolished and mostly useless creations!
+              My name's Levi and this is my personal site, I host a whole load of
+              random ass stuff and I trust you'll enjoy searching through my
+              unfinished, unpolished and mostly useless creations.{" "}
+              <Link to="/about" style={{ textDecoration: "none" }}>
+                Find out more
+              </Link>
             </p>
           </div>
         </div>

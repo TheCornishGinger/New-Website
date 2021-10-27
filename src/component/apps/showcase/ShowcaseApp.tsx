@@ -13,7 +13,7 @@ export function ShowcaseApp() {
         </p>
         <p className="text small">There's nothing here... how embearassing!</p>
         <p className="text small">
-          When Levi get's his bearings I'll show a game here.
+          When Levi gets his bearings I'll show a game here.
         </p>
       </div>
     </div>

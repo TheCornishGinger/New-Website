@@ -1,11 +1,11 @@
 import logo from "../../resource/image/logo.gif";
+import loader from "../../resource/image/loader.gif";
 import { Window } from "../../component/window/Window";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 
 export function Home() {
   let renderWindow = () => {
-    console.log("render window");
     let height;
     if (window.innerWidth < 900) {
       height = window.innerHeight / 3;
@@ -33,7 +33,19 @@ export function Home() {
           </div>
           <div className="margin-auto" style={{ flex: 1 }}>
             <div className="window-wrap">
-              <p>Loading window...</p>
+              <p className="window-load-text">
+                Loading window
+                <img
+                  src={loader}
+                  alt="Loader"
+                  style={{
+                    imageRendering: "pixelated",
+                    width: "40%",
+                    margin: "auto",
+                    opacity: 0.5,
+                  }}
+                />
+              </p>
             </div>
             <p className="text medium home-desc">
               My name's Levi and this is my personal site, I host a whole load of

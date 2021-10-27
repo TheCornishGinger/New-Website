@@ -35,6 +35,19 @@
   margin: auto;
 }
 
+.window-load-text {
+  border: 10px solid var(--theme-medium);
+  text-align: center;
+  font-size: 30px;
+  color: gray;
+  width: fit-content;
+  margin: auto;
+  border-radius: 6px;
+  background-color: var(--theme-medium);
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 900px) {
   .home-wrap-inner {
     flex-direction: column;

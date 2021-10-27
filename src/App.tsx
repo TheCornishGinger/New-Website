@@ -3,7 +3,6 @@
 import "./App.scss";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { Header } from "./component/header/Header";
-import { Window } from "./component/window/Window";
 
 // Pages
 import { Home } from "./page/home/Home";

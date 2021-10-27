@@ -1,7 +1,7 @@
 :root {
-  --menu-box-bgcolor: rgb(37, 102, 102);
-  --menu-box-highlight-bgcolor: rgb(52, 136, 136);
-  --menu-box-color: var(--top-header-color);
+  --menu-box-bgcolor: var(--theme-light);
+  --menu-box-highlight-bgcolor: var(--theme-light); //rgb(52, 136, 136)
+  --menu-box-color: rgb(37, 102, 102);
 
   --menu-btn-width: 65%;
   --menu-btn-height: 65%;
@@ -180,7 +180,7 @@
 }
 
 .menu-btn-child {
-  background-color: var(--top-header-color);
+  background-color: var(--menu-box-color);
   border: 4px solid var(--menu-box-color);
   animation-duration: var(--menu-anim-time);
   animation-fill-mode: forwards;

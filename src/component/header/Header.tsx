@@ -35,11 +35,13 @@ export function Header() {
   useEffect(() => {
     if (init) {
       let mouseEvent = (e: MouseEvent) => {
-        let size = headerSize * 1.5;
-        if (!menuState && e.pageX < size) {
-          openMenu();
-        } else if (menuState && e.pageX > size) {
-          closeMenu();
+        if (!isTouchDevice()) {
+          let size = headerSize * 1.5;
+          if (!menuState && e.pageX < size) {
+            openMenu();
+          } else if (menuState && e.pageX > size) {
+            closeMenu();
+          }
         }
       };
       document.addEventListener("mousemove", mouseEvent);
@@ -59,8 +61,8 @@ export function Header() {
     setHeaderAnim("closeSideHeader");
   };
 
-  let toggleMenu = () => {
-    //mobile only
+  //mobile only
+  function toggleMenu() {
     let val;
     if (menuState) {
       val = "close";
@@ -85,7 +87,7 @@ export function Header() {
     }
     setHeaderAnim(val + "SideHeaderMobile");
     setMenuState(!menuState);
-  };
+  }
 
   // ON INIT
   if (!init) {
@@ -173,37 +175,19 @@ export function Header() {
         <div className="side-header-wrap outer">
           <div className="side-header-wrap inner">
             <Link to="/games">
-              <div
-                className="box side games"
-                //   onmouseover="buttonHover('games')"
-                //   onclick="buttonPress('games')"
-                //   onmouseleave="buttonUnhover('games')"
-                id="games-btn"
-              >
+              <div className="box side games" id="games-btn">
                 <img src={gamesImg} className="box-image" alt="Games" />
                 <p className="box-text">Games</p>
               </div>
             </Link>
             <Link to="/projects">
-              <div
-                className="box side projects"
-                //   onmouseover="buttonHover('projects')"
-                //   onclick="buttonPress('projects')"
-                //   onmouseleave="buttonUnhover('projects')"
-                id="projects-btn"
-              >
+              <div className="box side projects" id="projects-btn">
                 <img src={projectsImg} className="box-image" alt="Projects" />
                 <p className="box-text">Projects</p>
               </div>
             </Link>
             <Link to="/about">
-              <div
-                className="box side"
-                //   onmouseover="buttonHover('bio')"
-                //   onclick="buttonPress('bio')"
-                //   onmouseleave="buttonUnhover('bio')"
-                id="bio-btn"
-              >
+              <div className="box side" id="bio-btn">
                 <img src={bioImg} className="box-image" alt="Bio" />
                 <p className="box-text">Bio</p>
               </div>

@@ -2,6 +2,9 @@ import logoImg from "../../resource/header/logo.png";
 import gamesImg from "../../resource/header/menu_games.png";
 import projectsImg from "../../resource/header/menu_projects.png";
 import bioImg from "../../resource/header/menu_bio.png";
+import twitterIcon from "../../resource/header/twitter.png";
+import youtubeIcon from "../../resource/header/youtube.png";
+
 import "./Header.scss";
 import { useEffect, useState } from "react";
 import { isTouchDevice } from "../../globalFunctions";
@@ -15,6 +18,8 @@ export function Header() {
   let [menuState, setMenuState] = useState<boolean>(false);
   let [sideHeaderClass, setSideHeaderClass] = useState<string>("side-header");
   //let [headerSize, setHeaderSize] = useState<number>(80);
+  let [hoverTitle, setHoverTitle] = useState<string>();
+  let [hoverTitleY, setHoverTitleY] = useState<number>();
 
   // ANIMATION
   let [headerAnim, setHeaderAnim] = useState<string>();
@@ -23,6 +28,11 @@ export function Header() {
   let [menuBtnClosedAnim, setMenuBtnClosedAnim] = useState<string>();
   let [menuBtnOpen1Anim, setMenuBtnOpen1Anim] = useState<string>();
   let [menuBtnOpen2Anim, setMenuBtnOpen2Anim] = useState<string>();
+  let [gamesBtnAnim, setGamesBtnAnim] = useState<"lighten" | "darken">();
+  let [projectsBtnAnim, setProjectsBtnAnim] = useState<"lighten" | "darken">();
+  let [bioBtnAnim, setBioBtnAnim] = useState<"lighten" | "darken">();
+  let [twitterIconAnim, setTwitterIconAnim] = useState<"lighten" | "darken">();
+  let [youtubeIconAnim, setYoutubeIconAnim] = useState<"lighten" | "darken">();
 
   // DISPLAY
   //eslint-disable-next-line
@@ -30,6 +40,7 @@ export function Header() {
   let [menuBtnDisplay, setMenuBtnDisplay] = useState<string>("none");
   let [menuBtnClosedDisplay, setMenuBtnClosedDisplay] = useState<string>("flex");
   let [menuBtnOpenDisplay, setMenuBtnOpenDisplay] = useState<string>("none");
+  let [hoverTitleDisplay, setHoverTitleDisplay] = useState<"none" | "flex">("none");
 
   // FUNCTIONS
   useEffect(() => {
@@ -43,14 +54,18 @@ export function Header() {
             closeMenu();
           }
         }
+        if (hoverTitleDisplay !== "none") {
+          setHoverTitleY(e.y - 20);
+        }
       };
       document.addEventListener("mousemove", mouseEvent);
       return () => {
         document.removeEventListener("mousemove", mouseEvent);
       };
     }
-  }, [init, menuState, headerSize]);
+  }, [init, menuState, headerSize, hoverTitleDisplay]);
 
+  // OPEN CLOSE MENU
   let openMenu = () => {
     setMenuState(true);
     setHeaderAnim("openSideHeader");
@@ -61,7 +76,7 @@ export function Header() {
     setHeaderAnim("closeSideHeader");
   };
 
-  //mobile only
+  // TOGGLE MENU (MOBILE ONLY)
   function toggleMenu() {
     let val;
     if (menuState) {
@@ -89,6 +104,59 @@ export function Header() {
     setMenuState(!menuState);
   }
 
+  // SOCIAL ICONS
+  let enterTwitterIcon = () => {
+    setTwitterIconAnim("darken");
+  };
+  let leaveTwitterIcon = () => {
+    setTwitterIconAnim("lighten");
+  };
+  let pressTwitterIcon = () => {
+    window.location.href = "http://www.twitter.com/Wrigscraft";
+  };
+  let enterYoutubeIcon = () => {
+    setYoutubeIconAnim("darken");
+  };
+  let leaveYoutubeIcon = () => {
+    setYoutubeIconAnim("lighten");
+  };
+  let pressYoutubeIcon = () => {
+    window.location.href = "http://www.youtube.com/TheCornishGingerOfficial";
+  };
+
+  // HOVER TITLE HANDLING
+  let showTitleGames = () => {
+    setHoverTitle("Games");
+    setHoverTitleDisplay("flex");
+    setGamesBtnAnim("darken");
+  };
+
+  let showTitleProjects = () => {
+    setHoverTitle("Projects");
+    setHoverTitleDisplay("flex");
+    setProjectsBtnAnim("darken");
+  };
+
+  let showTitleBio = () => {
+    setHoverTitle("Bio");
+    setHoverTitleDisplay("flex");
+    setBioBtnAnim("darken");
+  };
+
+  let hideTitle = () => {
+    let anim = "darken";
+    setHoverTitleDisplay("none");
+    if (bioBtnAnim === anim) {
+      setBioBtnAnim("lighten");
+    }
+    if (gamesBtnAnim === anim) {
+      setGamesBtnAnim("lighten");
+    }
+    if (projectsBtnAnim === anim) {
+      setProjectsBtnAnim("lighten");
+    }
+  };
+
   // ON INIT
   if (!init) {
     if (isTouchDevice()) {
@@ -103,13 +171,6 @@ export function Header() {
   return (
     <div id="header">
       <div className="placeholder-top"></div>
-      {/* <div
-        className="side-header-trigger"
-        onMouseOver={openMenu}
-        onMouseLeave={closeMenu}
-        style={{ display: menuTriggerDisplay }}
-      ></div> */}
-
       <div className="top-header">
         <div className="top-header-wrap outer">
           <div className="top-header-wrap inner">
@@ -126,7 +187,6 @@ export function Header() {
 
             <div
               className="box header menu-btn"
-              /*id="menu-btn"*/
               style={{ display: menuBtnDisplay, animationName: menuBtnColor }}
               onClick={toggleMenu}
             >
@@ -137,18 +197,9 @@ export function Header() {
                   animationName: menuBtnClosedAnim,
                 }}
               >
-                <div
-                  className="menu-btn-child closed"
-                  //style={{ animationName: menuBtnChildAnim }}
-                ></div>
-                <div
-                  className="menu-btn-child closed"
-                  //style={{ animationName: menuBtnChildAnim }}
-                ></div>
-                <div
-                  className="menu-btn-child closed"
-                  //style={{ animationName: menuBtnChildAnim }}
-                ></div>
+                <div className="menu-btn-child closed"></div>
+                <div className="menu-btn-child closed"></div>
+                <div className="menu-btn-child closed"></div>
               </div>
               <div
                 className="menu-btn-parent open"
@@ -175,27 +226,71 @@ export function Header() {
         <div className="side-header-wrap outer">
           <div className="side-header-wrap inner">
             <Link to="/games">
-              <div className="box side games" id="games-btn">
+              <div
+                className="box side games"
+                onMouseOver={showTitleGames}
+                onMouseLeave={hideTitle}
+                style={{ animationName: gamesBtnAnim }}
+              >
                 <img src={gamesImg} className="box-image" alt="Games" />
                 <p className="box-text">Games</p>
               </div>
             </Link>
             <Link to="/projects">
-              <div className="box side projects" id="projects-btn">
+              <div
+                className="box side projects"
+                onMouseOver={showTitleProjects}
+                onMouseLeave={hideTitle}
+                style={{ animationName: projectsBtnAnim }}
+              >
                 <img src={projectsImg} className="box-image" alt="Projects" />
                 <p className="box-text">Projects</p>
               </div>
             </Link>
             <Link to="/about">
-              <div className="box side" id="bio-btn">
+              <div
+                className="box side bio"
+                onMouseOver={showTitleBio}
+                onMouseLeave={hideTitle}
+                style={{ animationName: bioBtnAnim }}
+              >
                 <img src={bioImg} className="box-image" alt="Bio" />
                 <p className="box-text">Bio</p>
               </div>
             </Link>
+            <div className="social-icon-wrap">
+              <img
+                src={twitterIcon}
+                alt="Twitter"
+                className="social-icon"
+                style={{ animationName: twitterIconAnim }}
+                onMouseOver={enterTwitterIcon}
+                onMouseLeave={leaveTwitterIcon}
+                onPointerDown={pressTwitterIcon}
+              />
+              <img
+                src={youtubeIcon}
+                alt="YouTube"
+                className="social-icon"
+                style={{ animationName: youtubeIconAnim }}
+                onMouseOver={enterYoutubeIcon}
+                onMouseLeave={leaveYoutubeIcon}
+                onPointerDown={pressYoutubeIcon}
+              />
+            </div>
           </div>
         </div>
         <div className="side-header-text">
           <p>Hover for menu</p>
+        </div>
+      </div>
+      <div
+        className="hover-title-wrap"
+        style={{ display: hoverTitleDisplay, top: hoverTitleY }}
+      >
+        <div className="hover-title-triangle"></div>
+        <div className="hover-title-box">
+          <span className="hover-title-text">{hoverTitle}</span>
         </div>
       </div>
     </div>

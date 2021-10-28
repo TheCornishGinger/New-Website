@@ -92,6 +92,24 @@ body {
   }
 }
 
+@keyframes darken {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(0.75);
+  }
+}
+
+@keyframes lighten {
+  from {
+    filter: brightness(0.75);
+  }
+  to {
+    filter: brightness(1);
+  }
+}
+
 .blur {
   animation-duration: 450ms;
   filter: blur(var(--max-blur));
@@ -143,12 +161,12 @@ body {
 }
 
 .text.medium {
-  font-size: 30px;
+  font-size: 32px;
   margin: 8px;
 }
 
 .text.large {
-  font-size: 100px;
+  font-size: 96px;
   margin: 0;
 }
 

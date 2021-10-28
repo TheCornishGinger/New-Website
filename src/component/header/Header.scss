@@ -21,9 +21,7 @@
   width: 100%;
 }
 
-//
 // TOP HEADER
-//
 #header {
   position: relative;
   z-index: 1;
@@ -50,9 +48,7 @@
   height: 100%;
 }
 
-//
 // SIDE HEADER
-//
 .side-header-trigger {
   position: fixed;
   left: 0;
@@ -88,9 +84,22 @@
   position: absolute;
 }
 
-//
+.social-icon-wrap {
+  bottom: 0;
+  position: fixed;
+  display: grid;
+  width: var(--header-size);
+}
+
+.social-icon {
+  width: calc(var(--header-size) * 0.6);
+  margin: auto;
+  margin-bottom: calc(var(--header-size) * 0.15);
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
+}
+
 // BOX
-//
 .box {
   background-color: var(--theme-light);
   margin: auto;
@@ -112,6 +121,8 @@
 }
 
 .box.side {
+  animation-fill-mode: forwards;
+  animation-duration: 300ms;
   margin-top: calc(var(--header-size) / 10) !important;
 }
 
@@ -144,18 +155,16 @@
   text-align: center;
 }
 
-//
 // BUTTONS
-//
-#games-btn {
+.box.games {
   background-color: rgb(85, 142, 81) !important;
 }
 
-#projects-btn {
+.box.projects {
   background-color: rgb(145, 114, 82) !important;
 }
 
-#bio-btn {
+.box.bio {
   background-color: rgb(208, 138, 77) !important;
 }
 
@@ -227,12 +236,31 @@
   margin: 0;
 }
 
-// .tableItem {
-//   width: 120px;
-//   font-weight: normal;
-//   padding-left: 16px;
-//   padding-right: 16px;
-// }
+.hover-title-wrap {
+  position: absolute;
+  display: flex;
+  left: var(--header-size);
+}
+
+.hover-title-triangle {
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 20px solid var(--theme-light);
+}
+
+.hover-title-box {
+  border-left: 10px solid var(--theme-light);
+  border-right: 10px solid var(--theme-light);
+  background-color: var(--theme-light);
+  border-radius: 0 6px 6px 0;
+  display: flex;
+}
+
+.hover-title-text {
+  font-size: 32px;
+  margin-top: 5px;
+  color: var(--theme-text);
+}
 
 //
 // MEDIA SIZING

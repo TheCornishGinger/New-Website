@@ -19,7 +19,7 @@ export function AboutMeApp() {
                 even do some epic voiceover. <span>(hang in there!)</span>
               </span>
             </div>
-            <p>
+            <span>
               It's mid October 2020, my best friend's just married so I have more
               time on my hands. Shortly before the wedding I had once again taken up
               game design for the 1000th time, and started work making a 2D horror
@@ -50,7 +50,7 @@ export function AboutMeApp() {
               <div className="gap" />
               Anddd after more resarts (and a lot of help) we reach this website,
               version 3! iTs sO mUcH cOoLeR!!!
-            </p>
+            </span>
             <p className="text small">Created by Levi Wrigley.</p>
           </div>
         </div>

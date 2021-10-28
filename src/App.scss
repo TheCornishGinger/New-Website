@@ -6,7 +6,6 @@
   --theme-light: rgb(32, 40, 40);
   --theme-text: rgb(100, 115, 115);
 
-  --max-width: 50vw;
   --loader-size: 3vw;
   --max-blur: 10px;
 }
@@ -117,10 +116,6 @@ body {
   margin: auto !important;
 }
 
-.max-width {
-  max-width: var(--max-width);
-}
-
 .no-margin {
   margin: 0 !important;
 }
@@ -143,17 +138,17 @@ body {
 }
 
 .text.small {
-  font-size: calc(var(--header-size) * 0.3);
+  font-size: 24px;
   margin: 10px;
 }
 
 .text.medium {
-  font-size: calc(var(--header-size) * 0.4);
+  font-size: 30px;
   margin: 8px;
 }
 
 .text.large {
-  font-size: calc(var(--header-size) * 1.2);
+  font-size: 100px;
   margin: 0;
 }
 

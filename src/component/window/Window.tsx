@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { isTouchDevice } from "../../globalFunctions";
 import "./Window.scss";
 
 type WindowProps = {
@@ -93,6 +94,15 @@ export function Window({
     "none"
   );
 
+  //EVENTS
+  let [mouseDownEvent, setMouseDownEvent] = useState<"mousedown" | "touchstart">(
+    "mousedown"
+  );
+  let [mouseUpEvent, setMouseUpEvent] = useState<"mouseup" | "touchend">("mouseup");
+  let [mouseMoveEvent, setMouseMoveEvent] = useState<"mousemove" | "touchmove">(
+    "mousemove"
+  );
+
   // UPDATE RAW WIDTH
   useEffect(() => {
     if (!_fixedPlace) {
@@ -107,16 +117,24 @@ export function Window({
 
   // MOUSE MOVE
   useEffect(() => {
-    let mouseMove = (e: MouseEvent) => {
+    let mouseMove = (e: any) => {
+      let x, y;
+      if (isTouchDevice()) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      } else {
+        x = e.x;
+        y = e.y;
+      }
       if (windowDrag) {
-        let posX = e.x - windowDragOffset[0];
-        let posY = e.y - windowDragOffset[1];
-        if (e.x + windowSize[0] - windowDragOffset[0] > window.innerWidth) {
+        let posX = x - windowDragOffset[0];
+        let posY = y - windowDragOffset[1];
+        if (x + windowSize[0] - windowDragOffset[0] > window.innerWidth) {
           posX = window.innerWidth - windowSize[0];
         } else if (posX < 2) {
           posX = 1;
         }
-        if (e.y + windowSize[1] - windowDragOffset[1] > window.innerHeight) {
+        if (y + windowSize[1] - windowDragOffset[1] > window.innerHeight) {
           posY = window.innerHeight - windowSize[1];
         } else if (posY < 2) {
           posY = 1;
@@ -124,18 +142,18 @@ export function Window({
         setWindowPos([posX, posY]);
       } else if (windowResize) {
         if (windowResizeState === "bottom") {
-          setWindowSize([windowSize[0], e.y - windowPos[1]]);
+          setWindowSize([windowSize[0], y - windowPos[1]]);
         } else if (windowResizeState === "left") {
-          setWindowPos([e.x, windowPos[1]]);
+          setWindowPos([x, windowPos[1]]);
           //setWindowSize([windowSize[0], windowSize[1]]);
         } else if (windowResizeState === "right") {
-          setWindowSize([e.x - windowPos[1], windowSize[1]]);
+          setWindowSize([x - windowPos[0], windowSize[1]]);
         }
       }
     };
-    document.addEventListener("mousemove", mouseMove);
+    document.addEventListener(mouseMoveEvent, mouseMove);
     return () => {
-      document.removeEventListener("mousemove", mouseMove);
+      document.removeEventListener(mouseMoveEvent, mouseMove);
     };
   }, [
     windowPos,
@@ -144,21 +162,30 @@ export function Window({
     windowResize,
     windowResizeState,
     windowDragOffset,
+    mouseMoveEvent,
   ]);
 
   // WINDOW DRAG OFFSET
   useEffect(() => {
-    let mouseDown = (e: MouseEvent) => {
+    let mouseDown = (e: any) => {
+      let x, y;
+      if (isTouchDevice()) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      } else {
+        x = e.x;
+        y = e.y;
+      }
       setWindowDragOffset([
-        Math.floor(e.x) - windowPos[0],
-        Math.floor(e.y) - windowPos[1],
+        Math.floor(x) - windowPos[0],
+        Math.floor(y) - windowPos[1],
       ]);
     };
-    document.addEventListener("mousedown", mouseDown);
+    document.addEventListener(mouseDownEvent, mouseDown);
     return () => {
-      document.removeEventListener("mousedown", mouseDown);
+      document.removeEventListener(mouseDownEvent, mouseDown);
     };
-  }, [windowPos]);
+  }, [windowPos, mouseDownEvent]);
 
   // WINDOW RESIZE
   useEffect(() => {
@@ -168,12 +195,6 @@ export function Window({
     }
     //eslint-disable-next-line
   }, [windowResize]);
-
-  // WINDOW DRAG
-  useEffect(() => {
-    if (windowDrag) {
-    }
-  }, [windowDrag]);
 
   // MOUSE UP
   useEffect(() => {
@@ -186,11 +207,11 @@ export function Window({
         setCursorIcon("default");
       }
     };
-    document.addEventListener("mouseup", mouseUp);
+    document.addEventListener(mouseUpEvent, mouseUp);
     return () => {
-      document.removeEventListener("mouseup", mouseUp);
+      document.removeEventListener(mouseUpEvent, mouseUp);
     };
-  }, [windowResize, windowDrag]);
+  }, [windowResize, windowDrag, mouseUpEvent]);
 
   // BODY CONTENT INTERACTION
   useEffect(() => {
@@ -240,9 +261,11 @@ export function Window({
     }
   };
   let enterCloseBtn = () => {
-    setCloseBtnAnim("btnEnter");
-    setCloseBtnTextAnim("textEnter");
-    setCloseIconDisplay("block");
+    if (!isTouchDevice()) {
+      setCloseBtnAnim("btnEnter");
+      setCloseBtnTextAnim("textEnter");
+      setCloseIconDisplay("block");
+    }
   };
   let leaveCloseBtn = () => {
     setCloseBtnAnim("btnLeave");
@@ -266,9 +289,11 @@ export function Window({
     }
   };
   let enterMinBtn = () => {
-    setMinBtnAnim("btnEnter");
-    setMinBtnTextAnim("textEnter");
-    setMinIconDisplay("block");
+    if (!isTouchDevice()) {
+      setMinBtnAnim("btnEnter");
+      setMinBtnTextAnim("textEnter");
+      setMinIconDisplay("block");
+    }
   };
   let leaveMinBtn = () => {
     setMinBtnAnim("btnLeave");
@@ -280,15 +305,24 @@ export function Window({
 
   // MAX BUTTON
   let maxWindow = () => {
-    if (!_fixedPlace && !windowDrag && !windowResize) {
+    if (!windowDrag && !windowResize) {
       if (windowFullscreen) {
+        if (_fixedPlace) {
+          setWindowPositionType("initial");
+        }
         setWindowSize(oldWindowSize);
         setWindowContentSize(oldWindowSize);
         setWindowPos(oldWindowPos);
         setMaxBtnText("<>");
       } else {
+        let timeout = 400;
+        if (_fixedPlace) {
+          setWindowPositionType("absolute");
+          timeout = 0;
+        } else {
+          setWindowAnim("maxWindow");
+        }
         setOldWindowPos(windowPos);
-        setWindowAnim("maxWindow");
         setTimeout(() => {
           setWindowPos([0, 0]);
           setOldWindowSize(windowSize);
@@ -296,15 +330,17 @@ export function Window({
           setWindowContentSize([window.innerWidth, window.innerHeight]);
           setMaxBtnText("><");
           setWindowAnim("none");
-        }, 400);
+        }, timeout);
       }
       setWindowFullscreen(!windowFullscreen);
     }
   };
   let enterMaxBtn = () => {
-    setMaxBtnAnim("btnEnter");
-    setMaxBtnTextAnim("textEnter");
-    setMaxIconDisplay("block");
+    if (!isTouchDevice()) {
+      setMaxBtnAnim("btnEnter");
+      setMaxBtnTextAnim("textEnter");
+      setMaxIconDisplay("block");
+    }
   };
   let leaveMaxBtn = () => {
     setMaxBtnAnim("btnLeave");
@@ -333,15 +369,20 @@ export function Window({
 
   // INIT
   let windowInit = () => {
-    if (_placeholder || !_fixedPlace) {
+    if (_placeholder && !_fixedPlace) {
       setPlaceholderDisplay("block");
+      setPlaceholderSize(_size);
     }
     if (_fixedPlace) {
       setWindowPositionType("initial");
       setRawWidth("auto");
       setControlBtnColor(" disabled");
     }
-    setPlaceholderSize(_size);
+    if (isTouchDevice()) {
+      setMouseDownEvent("touchstart");
+      setMouseMoveEvent("touchmove");
+      setMouseUpEvent("touchend");
+    }
     setOldWindowSize(_size);
     setWindowDisplay("block");
   };
@@ -413,7 +454,7 @@ export function Window({
               </p>
             </div>
             <div
-              className={"window-btn max" + controlBtnColor}
+              className={"window-btn max"}
               style={{ animationName: maxBtnAnim }}
               onClick={maxWindow}
               onMouseEnter={enterMaxBtn}
@@ -427,9 +468,10 @@ export function Window({
               </p>
             </div>
           </div>
-          <div className="window-drag-area" onPointerDown={enableDrag}></div>
-          <div className="window-title-wrap" onPointerDown={enableDrag}>
-            <p className="window-title">{windowTitle}</p>
+          <div className="window-drag-area" onPointerDown={enableDrag}>
+            <div style={{ display: "flex", margin: "auto" }}>
+              <p className="window-title">{windowTitle}</p>
+            </div>
           </div>
         </div>
         <div
@@ -444,20 +486,20 @@ export function Window({
           <div
             className="resize-box left"
             style={{ height: bodyHeight }}
-            onMouseDown={enableResizeLeft}
+            onPointerDown={enableResizeLeft}
             onMouseEnter={setCursorResizeW}
             onMouseLeave={setCursorNormal}
           ></div>
           <div
             className="resize-box bottom"
-            onMouseDown={enableResizeBottom}
+            onPointerDown={enableResizeBottom}
             onMouseEnter={setCursorResizeH}
             onMouseLeave={setCursorNormal}
           ></div>
           <div
             className="resize-box right"
             style={{ height: bodyHeight }}
-            onMouseDown={enableResizeRight}
+            onPointerDown={enableResizeRight}
             onMouseEnter={setCursorResizeW}
             onMouseLeave={setCursorNormal}
           ></div>

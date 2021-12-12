@@ -225,17 +225,19 @@ export function Header() {
       <div className={sideHeaderClass} style={{ animationName: headerAnim }}>
         <div className="side-header-wrap outer">
           <div className="side-header-wrap inner">
-            <Link to="/games">
-              <div
-                className="box side games"
-                onMouseOver={showTitleGames}
-                onMouseLeave={hideTitle}
-                style={{ animationName: gamesBtnAnim }}
-              >
-                <img src={gamesImg} className="box-image" alt="Games" />
-                <p className="box-text">Games</p>
-              </div>
-            </Link>
+            <div
+              className="box side games"
+              onMouseOver={showTitleGames}
+              onMouseLeave={hideTitle}
+              onClick={() => {
+                window.location.assign("/games");
+              }}
+              style={{ animationName: gamesBtnAnim }}
+            >
+              <img src={gamesImg} className="box-image" alt="Games" />
+              <p className="box-text">Games</p>
+            </div>
+
             <Link to="/projects">
               <div
                 className="box side projects"

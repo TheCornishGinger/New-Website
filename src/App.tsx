@@ -14,6 +14,7 @@ import { AboutMe } from "./page/about-me/AboutMe";
 import { BrowserApp } from "./component/apps/browser/BrowserApp";
 import { AboutMeApp } from "./component/apps/about-me/AboutMeApp";
 import { ShowcaseApp } from "./component/apps/showcase/ShowcaseApp";
+import { MinecraftServer } from "./page/projects/minecraft-server/MinecraftServer";
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
           <div className="page-wrap">
             <div className="margin-auto max-width">
               <Projects />
+            </div>
+          </div>
+        </Route>
+        <Route exact path="/server">
+          <Header />
+          <div className="page-wrap">
+            <div className="margin-auto max-width">
+              <MinecraftServer />
             </div>
           </div>
         </Route>

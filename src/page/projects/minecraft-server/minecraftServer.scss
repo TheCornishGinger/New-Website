@@ -1,0 +1,9 @@
+.mc-server-title {
+  color: orange;
+}
+
+@media only screen and (max-width: 400px) {
+  .mc-server-title {
+    font-size: 80px !important;
+  }
+}
